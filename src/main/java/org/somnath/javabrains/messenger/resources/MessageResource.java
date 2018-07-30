@@ -70,6 +70,7 @@ public class MessageResource {
 	}
 	/*------------------------------Using Exceptions------------------------------------------------*/
 
+	/*------------------------------Using HATEOAS------------------------------------------------*/
 	@GET
 	@Path("/hateoas/{messageId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -99,6 +100,7 @@ public class MessageResource {
 		return uri.toString();
 	}
 
+	/*------------------------------Using HATEOAS------------------------------------------------*/
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
