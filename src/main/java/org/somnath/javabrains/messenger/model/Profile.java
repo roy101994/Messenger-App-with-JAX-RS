@@ -2,7 +2,10 @@ package org.somnath.javabrains.messenger.model;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 		/*----------------------------Profile Pojo--------------------------------------*/
+@XmlRootElement
 public class Profile {
 
 	private long id;

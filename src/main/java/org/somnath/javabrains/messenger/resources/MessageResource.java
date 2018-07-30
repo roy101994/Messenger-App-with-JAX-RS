@@ -21,9 +21,10 @@ import javax.ws.rs.core.UriInfo;
 
 import org.somnath.javabrains.messenger.exception.DataNotFoundException;
 import org.somnath.javabrains.messenger.model.Message;
+import org.somnath.javabrains.messenger.model.Profile;
 import org.somnath.javabrains.messenger.service.MessageService;
 
-/*CLASS CONTAINING ALL THE HTTP METHODS*/
+/*---------------------------CLASS CONTAINING ALL THE HTTP METHODS---------------------------------*/
 @Path("/messages")
 public class MessageResource {
 
@@ -63,9 +64,39 @@ public class MessageResource {
 	public Message getMessage(@PathParam("messageId") long id) {
 		Message message = messageService.getMessage(id);
 		if (message == null) {
-			throw new DataNotFoundException("Message with id:"+" "+id+" "+"not Found");
+			throw new DataNotFoundException("Message with id:" + " " + id + " " + "not Found");
 		}
 		return message;
+	}
+	/*------------------------------Using Exceptions------------------------------------------------*/
+
+	@GET
+	@Path("/hateoas/{messageId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message getMessageWithLinks(@PathParam("messageId") long id, @Context UriInfo uriInfo) {
+		Message message = messageService.getMessage(id);
+		message.addLink(getUriForSelf(uriInfo, message), "self");
+		message.addLink(getUriForProfile(uriInfo, message), "profile");
+		message.addLink(getUriInfoForComments(uriInfo, message), "comments");
+		return message;
+	}
+
+	private String getUriForSelf(UriInfo uriInfo, Message message) {
+		String url = uriInfo.getBaseUriBuilder().path(MessageResource.class).path(Long.toString(message.getId()))
+				.build().toString();
+		return url;
+	}
+
+	private String getUriForProfile(UriInfo uriInfo, Message message) {
+		URI uri = uriInfo.getBaseUriBuilder().path(ProfileResource.class).path(message.getAuthor()).build();
+		return uri.toString();
+	}
+
+	private String getUriInfoForComments(UriInfo uriInfo, Message message) {
+		URI uri = uriInfo.getBaseUriBuilder().path(ProfileResource.class)
+				.path(MessageResource.class, "getCommentResource").path(CommentResource.class)
+				.resolveTemplate("messageId", message.getId()).build();
+		return uri.toString();
 	}
 
 	@POST

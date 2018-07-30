@@ -10,9 +10,9 @@ import org.somnath.javabrains.messenger.model.Profile;
 public class ProfileService {
 
 	private Map<String, Profile> profiles = DatabaseClass.getProfiles();
-	
-	public ProfileService(){
-		profiles.put("Somnath",new Profile(1L,"Somnath","Koushik","roy"));
+
+	public ProfileService() {
+		profiles.put("TEAM12", new Profile(1, "patla", "Somnath Ghose", "Roy"));
 	}
 
 	public List<Profile> getAllProfiles() {

@@ -10,6 +10,8 @@ import org.somnath.javabrains.messenger.model.Message;
 
 public class CommentService {
 
+	/*Initializa some comments*/
+	
 	private Map<Long, Message> messages = DatabaseClass.getMessages();
 
 	public List<Comment> getAllComments(long messageId) {

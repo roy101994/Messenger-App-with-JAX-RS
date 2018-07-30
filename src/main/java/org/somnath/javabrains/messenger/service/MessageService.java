@@ -63,4 +63,6 @@ public class MessageService {
 
 	}
 	/* Pagination Support and Filtering */
+
+	/*----------------------------------- HATEOAS------------------------------------------- */
 }
