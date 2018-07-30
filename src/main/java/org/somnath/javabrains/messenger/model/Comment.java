@@ -12,6 +12,8 @@ public class Comment {
 	private Date created;
 	private String author;
 
+	/*This no-arg constructor is required if we are using parametrized constructors as JAX-RS uses Reflection to instantiate 
+	the Comment bean.If you are not providing this default constructor then error will come*/
 	public Comment() {
 
 	}
